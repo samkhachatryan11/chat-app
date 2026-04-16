@@ -19,6 +19,12 @@ export class User {
   @Column({ nullable: true })
   password: string;
 
+  @Column('text', { nullable: true })
+  bio: string;
+
+  @Column({ nullable: true })
+  avatar: string;
+
   @CreateDateColumn()
   createdAt: Date;
 
