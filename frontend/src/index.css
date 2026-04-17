@@ -1,6 +1,13 @@
 @import url("https://fonts.googleapis.com/css2?family=Rubik:ital,wght@0,300..900;1,300..900&display=swap");
 @import "tailwindcss";
 
+@theme {
+  --color-primary: #3a72ff;
+  --color-secondary: #6883ba;
+  --color-background: #e0e0e0;
+  --color-white: #f9f9f9;
+}
+
 * {
   box-sizing: border-box;
 }
@@ -23,4 +30,8 @@ input {
   border-radius: 10px;
   font-size: 16px;
   outline: none;
+}
+
+button {
+  cursor: pointer;
 }

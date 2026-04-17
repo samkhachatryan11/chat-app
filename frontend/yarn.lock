@@ -329,6 +329,11 @@
   resolved "https://registry.yarnpkg.com/@oxc-project/types/-/types-0.123.0.tgz#a0bbc8f0cec16270df203cbad290bde3ed0289ad"
   integrity sha512-YtECP/y8Mj1lSHiUWGSRzy/C6teUKlS87dEfuVKT09LgQbUsBW1rNg+MiJ4buGu3yuADV60gbIvo9/HplA56Ew==
 
+"@redux-devtools/extension@^4.0.0":
+  version "4.0.0"
+  resolved "https://registry.yarnpkg.com/@redux-devtools/extension/-/extension-4.0.0.tgz#bd03401ff0f033350b1f0bfa9b210029c5450627"
+  integrity sha512-pLIzgo5MvqdDLe5D1pzHLgmr8THra/DOyRf5MvOEPZnKKDn6RhFbNSS5oXZ3Cal0cpx08kx7sR6zD8QgoXEnZA==
+
 "@rolldown/binding-android-arm64@1.0.0-rc.13":
   version "1.0.0-rc.13"
   resolved "https://registry.yarnpkg.com/@rolldown/binding-android-arm64/-/binding-android-arm64-1.0.0-rc.13.tgz#0862753ca7cad78350240cd68fc79150606b42c4"

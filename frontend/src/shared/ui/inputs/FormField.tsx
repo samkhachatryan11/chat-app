@@ -11,7 +11,7 @@ export function FormField({
 }) {
   return (
     <div className="flex flex-col gap-1">
-      <label htmlFor={htmlFor} className="text-sm font-medium text-blue-500">
+      <label htmlFor={htmlFor} className="text-sm font-medium text-primary">
         {label}
       </label>
       {children}
