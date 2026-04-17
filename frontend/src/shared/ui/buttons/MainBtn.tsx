@@ -18,7 +18,7 @@ export function MainBtn({
       onClick={onClick}
       type="submit"
       disabled={disabled}
-      className={`${btnType === "primary" ? "bg-blue-500 hover:bg-blue-600 text-white" : "bg-white hover:bg-gray-200 text-blue-500"} font-bold py-2 px-4 rounded transition duration-200`}
+      className={`${btnType === "primary" ? "bg-primary hover:opacity-95 text-white" : "bg-white hover:bg-gray-200 text-blue-500"} flex items-center justify-center font-bold py-2 px-4 rounded-md transition duration-200 w-full min-h-10`}
     >
       {children}
     </button>

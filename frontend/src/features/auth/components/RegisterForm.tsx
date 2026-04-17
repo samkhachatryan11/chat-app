@@ -6,18 +6,21 @@ import { useState } from "react";
 import { NavLink } from "react-router";
 import { useRegister } from "@/features/auth/hooks/useRegister";
 import { FormField } from "@/shared/ui/inputs/FormField";
+import MainLoader from "@/shared/ui/loaders/MainLoader";
+import { useAuthStore } from "@/features/auth/stores/useAuthStore";
 
 export function RegisterForm() {
   const [showPassword, setShowPassword] = useState(false);
   const { form, onSubmit } = useRegister();
+  const isLoading = useAuthStore.getState().isLoading;
 
   return (
-    <div className="pt-4 bg-transparent pl-4 pb-6 pr-4 rounded-lg border-blue-500 border w-full max-w-sm">
+    <div className="pt-4 bg-transparent pl-4 pb-6 pr-4 rounded-lg border-primary border w-full max-w-sm">
       <form onSubmit={onSubmit} className="flex flex-col gap-3">
-        <Heading className="text-blue-500" level={3}>
+        <Heading className="text-primary" level={3}>
           Register
         </Heading>
-        <hr className="mb-4 text-blue-500" />
+        <hr className="mb-4 text-primary" />
         <FormField
           label="Username"
           htmlFor="username"
@@ -27,7 +30,7 @@ export function RegisterForm() {
             {...form.register("username")}
             id="username"
             type="text"
-            className="text-blue-500 border-blue-500 border"
+            className="text-primary border-primary border"
           />
         </FormField>
         <FormField
@@ -39,7 +42,7 @@ export function RegisterForm() {
             {...form.register("email")}
             type="email"
             id="email"
-            className="text-blue-500 border-blue-500 border"
+            className="text-primary border-primary border"
           />
         </FormField>
         <FormField
@@ -52,7 +55,7 @@ export function RegisterForm() {
               {...form.register("password")}
               type={showPassword ? "text" : "password"}
               id="password"
-              className="text-blue-500 border-blue-500 border w-full"
+              className="text-primary border-primary border w-full"
             />
             <span
               className="absolute bottom-2.5 right-3 cursor-pointer"
@@ -71,14 +74,18 @@ export function RegisterForm() {
             {...form.register("confirmPassword")}
             type={showPassword ? "text" : "password"}
             id="confirmPassword"
-            className="text-blue-500 border-blue-500 border"
+            className="text-primary border-primary border"
           />
         </FormField>
-        <NavLink className="mb-2 text-blue-500" to="/login">
+        <NavLink className="mb-2 text-primary" to="/login">
           Already have an account?
         </NavLink>
-        <MainBtn onClick={onSubmit} btnType="primary">
-          Register
+        <MainBtn
+          onClick={onSubmit}
+          btnType="primary"
+          disabled={form.formState.isSubmitting}
+        >
+          {isLoading ? <MainLoader /> : "Register"}
         </MainBtn>
       </form>
     </div>

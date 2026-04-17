@@ -6,7 +6,7 @@ export function AuthLayout() {
   return (
     <div>
       <main>
-        <div className="flex flex-col justify-center items-center w-1/2 bg-blue-500">
+        <div className="flex flex-col justify-center items-center w-1/2 bg-primary">
           <Logo />
           <div>
             <ChatLogo />

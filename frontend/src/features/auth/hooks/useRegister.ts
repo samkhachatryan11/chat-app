@@ -4,7 +4,8 @@ import {
   registerSchema,
   type RegisterInput,
 } from "@/features/auth/schemas/registerSchema";
-import { authService } from "@/features/auth/services/authService";
+import { useAuthStore } from "@/features/auth/stores/useAuthStore";
+import { router } from "@/app/router";
 
 export const useRegister = () => {
   const form = useForm<RegisterInput>({
@@ -12,8 +13,12 @@ export const useRegister = () => {
     mode: "all",
   });
 
+  const register = useAuthStore((state) => state.register);
+
   const onSubmit = form.handleSubmit(async (data) => {
-    await authService.register(data);
+    await register(data);
+    router.navigate("/", { replace: true });
+    window.location.reload();
   });
 
   return { form, onSubmit };

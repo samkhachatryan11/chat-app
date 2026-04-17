@@ -1,50 +1,80 @@
-// import { create } from "zustand";
-// import { persist } from "zustand/middleware";
+import { create } from "zustand";
+import { devtools, persist } from "zustand/middleware";
+import { authService } from "@/features/auth/services/authService";
 
-// type User = {
-//   id: string;
-//   name: string;
-// };
+type User = {
+  id: string;
+  username: string;
+  email: string;
+};
 
-// type AuthState = {
-//   user: User | null;
-//   isLoading: boolean;
+type AuthState = {
+  user: User | null;
+  isLoading: boolean;
 
-//   login: (email: string, password: string) => Promise<void>;
-//   logout: () => void;
-// };
+  login: (data: { email: string; password: string }) => Promise<void>;
+  register: (data: {
+    username: string;
+    email: string;
+    password: string;
+    confirmPassword: string;
+  }) => Promise<void>;
+  getUser: () => User | null;
+  logout: () => Promise<void>;
+  isAuthenticated: () => boolean;
+};
 
-// export const useAuthStore = create<AuthState>()(
-//   persist(
-//     (set, get) => ({
-//       user: null,
-//       isLoading: false,
+export const useAuthStore = create<AuthState>()(
+  devtools(
+    persist(
+      (set, get) => ({
+        user: null,
+        isLoading: false,
 
-//       login: async (email, password) => {
-//         set({ isLoading: true });
+        login: async (data) => {
+          set({ isLoading: true });
 
-//         try {
-//           // simulate API
-//           const user = await fakeLoginApi(email, password);
+          try {
+            const result = await authService.login(data);
+            set({ user: result.data, isLoading: false });
+          } catch (error) {
+            console.log(error);
+          }
+        },
 
-//           set({ user });
-//         } finally {
-//           set({ isLoading: false });
-//         }
-//       },
+        register: async (data) => {
+          set({ isLoading: true });
 
-//       logout: () => {
-//         set({ user: null });
-//       },
-//     }),
-//     {
-//       name: "auth-storage",
-//     },
-//   ),
-// );
+          try {
+            const result = await authService.register(data);
+            set({ user: result.data, isLoading: false });
+          } catch (error) {
+            console.log(error);
+          }
+        },
 
-// async function fakeLoginApi(email: string, password: string) {
-//   return new Promise<User>((resolve) =>
-//     setTimeout(() => resolve({ id: "1", name: "Sam" }), 1000),
-//   );
-// }
+        getUser(): User | null {
+          return get().user;
+        },
+
+        logout: async () => {
+          set({ isLoading: true });
+
+          try {
+            await authService.logout(get().user?.id);
+            set({ user: null, isLoading: false });
+          } catch (error) {
+            console.log(error);
+          }
+        },
+
+        isAuthenticated: () => {
+          return get().user ? true : false;
+        },
+      }),
+      {
+        name: "auth-storage",
+      },
+    ),
+  ),
+);
