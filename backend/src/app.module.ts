@@ -8,12 +8,14 @@ import { APP_FILTER, APP_GUARD, APP_INTERCEPTOR } from '@nestjs/core';
 import { AuthGuard } from '@auth/guards/auth.guard';
 import { TransformInterceptor } from '@common/interceptors/transform.interceptor';
 import { HttpExceptionFilter } from './common/filters/exception.filter';
+import { UsersModule } from './modules/users/users.module';
 
 @Module({
   imports: [
     ConfigModule.forRoot({ isGlobal: true, envFilePath: '.env' }),
     DatabaseModule,
     AuthModule,
+    UsersModule,
     JwtModule.register({}),
   ],
   controllers: [],
