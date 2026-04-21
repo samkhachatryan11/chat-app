@@ -5,9 +5,11 @@ import helmet from 'helmet';
 import cookieParser from 'cookie-parser';
 import { HttpExceptionFilter } from '@common/filters/exception.filter';
 import { ValidationPipe } from '@nestjs/common';
+import { join } from 'path';
+import { NestExpressApplication } from '@nestjs/platform-express';
 
 async function bootstrap() {
-  const app = await NestFactory.create(AppModule);
+  const app = await NestFactory.create<NestExpressApplication>(AppModule);
   const configService: ConfigService = app.get(ConfigService);
   const PORT = configService.getOrThrow<string>('PORT');
 
@@ -47,6 +49,10 @@ async function bootstrap() {
       transform: true,
     }),
   );
+
+  app.useStaticAssets(join(__dirname, '..', 'uploads/avatars'), {
+    prefix: '/uploads/avatars',
+  });
 
   await app.listen(PORT);
   return PORT;
