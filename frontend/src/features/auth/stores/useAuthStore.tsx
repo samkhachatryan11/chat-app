@@ -6,6 +6,7 @@ type User = {
   id: string;
   username: string;
   email: string;
+  avatar: string;
 };
 
 type AuthState = {
@@ -19,9 +20,7 @@ type AuthState = {
     password: string;
     confirmPassword: string;
   }) => Promise<void>;
-  getUser: () => User | null;
   logout: () => Promise<void>;
-  isAuthenticated: () => boolean;
 };
 
 export const useAuthStore = create<AuthState>()(
@@ -33,47 +32,40 @@ export const useAuthStore = create<AuthState>()(
 
         login: async (data) => {
           set({ isLoading: true });
-
           try {
             const result = await authService.login(data);
             set({ user: result.data, isLoading: false });
           } catch (error) {
-            console.log(error);
+            set({ user: null, isLoading: false });
+            throw error;
           }
         },
 
         register: async (data) => {
           set({ isLoading: true });
-
           try {
             const result = await authService.register(data);
             set({ user: result.data, isLoading: false });
           } catch (error) {
-            console.log(error);
+            set({ user: null, isLoading: false });
+            throw error;
           }
-        },
-
-        getUser(): User | null {
-          return get().user;
         },
 
         logout: async () => {
           set({ isLoading: true });
-
           try {
             await authService.logout(get().user?.id);
-            set({ user: null, isLoading: false });
           } catch (error) {
-            console.log(error);
+            throw error;
+          } finally {
+            set({ user: null, isLoading: false });
           }
-        },
-
-        isAuthenticated: () => {
-          return get().user ? true : false;
         },
       }),
       {
         name: "auth-storage",
+        partialize: (state) => ({ user: state.user }),
       },
     ),
   ),
