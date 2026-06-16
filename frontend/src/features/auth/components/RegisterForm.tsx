@@ -85,7 +85,7 @@ export function RegisterForm() {
           btnType="primary"
           disabled={form.formState.isSubmitting}
         >
-          {isLoading ? <MainLoader /> : "Register"}
+          {isLoading ? <MainLoader color="secondary" /> : "Register"}
         </MainBtn>
       </form>
     </div>

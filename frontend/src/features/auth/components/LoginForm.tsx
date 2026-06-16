@@ -61,7 +61,7 @@ export function LoginForm() {
           btnType="primary"
           disabled={form.formState.isSubmitting}
         >
-          {isLoading ? <MainLoader /> : "Login"}
+          {isLoading ? <MainLoader color="secondary" /> : "Login"}
         </MainBtn>
       </form>
     </div>
