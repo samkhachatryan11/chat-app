@@ -3,7 +3,7 @@ const backendApi: string = import.meta.env.VITE_BACKEND_API_URL;
 export const authService = {
   login: async (data: { email: string; password: string }) => {
     try {
-      const res = await fetch(`${backendApi}/auth/login`, {
+      const res = await fetch(`${backendApi}/api/auth/login`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -25,7 +25,7 @@ export const authService = {
     confirmPassword: string;
   }) => {
     try {
-      const res = await fetch(`${backendApi}/auth/register`, {
+      const res = await fetch(`${backendApi}/api/auth/register`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -42,7 +42,7 @@ export const authService = {
 
   logout: async (id: string | undefined) => {
     try {
-      const res = await fetch(`${backendApi}/auth/logout/${id}`, {
+      const res = await fetch(`${backendApi}/api/auth/logout/${id}`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
