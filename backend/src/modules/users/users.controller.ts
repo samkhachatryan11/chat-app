@@ -1,7 +1,9 @@
 import {
   BadRequestException,
+  Body,
   Controller,
   Post,
+  Put,
   Req,
   UploadedFile,
   UseInterceptors,
@@ -10,11 +12,13 @@ import { ResponseMessage } from '@root/common/decorators/response-message.decora
 import { FileInterceptor } from '@nestjs/platform-express';
 import { Express } from 'express';
 import { UsersService } from './users.service';
+import { UpdateUserProfileDto } from '@users/dto';
 
 export const USER_CONTROLLER = 'api/users' as const;
 
 export const USER_ROUTS = {
   UPDATE_AVATAR: 'update-avatar',
+  UPDATE_USER_PROFILE: 'update-user-profile',
 } as const;
 
 @Controller(USER_CONTROLLER)
@@ -39,5 +43,17 @@ export class UsersController {
     file: Express.Multer.File,
   ) {
     await this.usersService.changeAvatar(req.user.id, file.path);
+  }
+
+  @Put(USER_ROUTS.UPDATE_USER_PROFILE)
+  @ResponseMessage('Uploaded profile successfully')
+  async updateUserProfile(
+    @Body() updateUserProfileDto: UpdateUserProfileDto,
+    @Req() req,
+  ) {
+    await this.usersService.updateUserProfile(
+      req.user.id,
+      updateUserProfileDto,
+    );
   }
 }
