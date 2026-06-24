@@ -43,6 +43,7 @@ export class UsersController {
     file: Express.Multer.File,
   ) {
     await this.usersService.changeAvatar(req.user.id, file.path);
+    return { avatar: file.path };
   }
 
   @Put(USER_ROUTS.UPDATE_USER_PROFILE)
